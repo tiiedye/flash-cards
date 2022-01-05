@@ -27,18 +27,14 @@ def next_card():
     current_card = random.choice(dict_list)
     fr_word = current_card["French"]
 
+    canvas.itemconfig(canvas_image, image=front_card_img)
     canvas.itemconfig(language_txt, text="French", fill="black")
     canvas.itemconfig(word_txt, text=f"{fr_word}", fill="black")
     window.after(3000, func=flip_card)
 
 
 def known_word():
-    canvas.itemconfig(canvas_image, image=front_card_img)
-    next_card()
-
-
-def unknown_word():
-    canvas.itemconfig(canvas_image, image=front_card_img)
+    dict_list.remove(current_card)
     next_card()
 
 
@@ -59,7 +55,7 @@ canvas.grid(columnspan=2, column=0, row=0)
 language_txt = canvas.create_text(400, 150, text="", font=LANGUAGE_FONT)
 word_txt = canvas.create_text(400, 263, text="", font=WORD_FONT)
 
-red_btn = Button(image=incorrect_img, highlightthickness=0, command=unknown_word)
+red_btn = Button(image=incorrect_img, highlightthickness=0, command=next_card)
 red_btn.grid(column=0, row=1)
 green_btn = Button(image=correct_img, highlightthickness=0, command=known_word)
 green_btn.grid(column=1, row=1)
